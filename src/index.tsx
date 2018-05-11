@@ -1,6 +1,13 @@
+/**
+* @name index.tsx
+* @author Connor Bulakites
+* @description This file defines a component which is currently used for testing
+* the main App component. It is referenced in the public index.html file.
+*/
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import AppComponent from './components/app';
+import AppComponent from './components/app/component';
 
 let documentA = {
   a: 1,
