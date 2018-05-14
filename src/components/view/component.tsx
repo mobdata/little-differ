@@ -6,12 +6,9 @@
 */
 
 import * as React from 'react';
-import ViewProps from './header';
+import { ViewProps, ViewState } from './header';
 import constructList from './functions';
 
-interface ViewState {
-  flattenedAttributes: Object;
-}
 
 class ViewComponent extends React.Component <ViewProps, ViewState> {
   constructor(props: ViewProps) {
