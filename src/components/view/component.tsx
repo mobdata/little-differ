@@ -10,7 +10,7 @@ import ViewProps from './header';
 import constructList from './functions';
 
 interface ViewState {
-  drawers: Array<Object>;
+  flattenedAttributes: Object;
 }
 
 class ViewComponent extends React.Component <ViewProps, ViewState> {
@@ -18,7 +18,7 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     super(props);
 
     this.state = {
-      drawers: [],
+      flattenedAttributes: {},
     };
   }
 
@@ -50,6 +50,16 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     return allPaths;
   }
 
+  componentDidMount() {
+    const { document } = this.props;
+    const allPaths = this.findAllPaths(document, 'root');
+    let flattenedAttributes = {};
+    allPaths.forEach((value: string): void => {
+      flattenedAttributes[value] = null;
+    })
+    this.setState({ flattenedAttributes });
+  }
+
   render() {
     const containerStyles: React.CSSProperties = {
       height: this.props.height,
@@ -66,7 +76,7 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
       visibility: 'visible',
     };
 
-    console.log(this.findAllPaths(this.props.document, 'root'));
+    console.log(this.state.flattenedAttributes);
 
     return (
       <div style={containerStyles}>
