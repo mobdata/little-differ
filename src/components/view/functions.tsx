@@ -9,34 +9,35 @@ import * as React from 'react';
 /** This function accepts a JSON document as a parameter and uses it to
 recursively build a hierarchical JSX list */
 function constructList(document: object) {
-  const ulStyles: React.CSSProperties = {
-    listStyleType: 'circle',
-    marginLeft: 10,
+
+  const hiddenList: React.CSSProperties = {
+    visibility: 'hidden',
   };
 
-  const liStyles: React.CSSProperties = {
-
+  const visibleList: React.CSSProperties = {
+    visibility: 'visible',
   };
 
   return (
-    <ul style={ulStyles}>{
+    <div>{
       Object.keys(document).map((key) => {
         let value = document[key];
         if (value !== null && typeof value === 'object') {
           return (
-            <li key={key} style={liStyles}>
-              {`${key}: `}<ul>{constructList(value)}</ul>
-            </li>
+            <div key={key}>
+              <button>{`${key}: `}</button>
+              <div style={visibleList}>{constructList(value)}</div>
+            </div>
           );
         } else {
           return (
-            <li key={key} style={liStyles}>
-              {`${key}: ${value}`}
-            </li>
+            <div key={key}>
+              <p>{`${key}: ${value}`}</p>
+            </div>
           );
         }
       })
-    }</ul>
+    }</div>
   )
 }
 

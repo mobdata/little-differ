@@ -6,8 +6,8 @@
 */
 
 import * as React from 'react';
-import JSONView from '../view/component'
-import AppProps from './header'
+import JSONView from '../view/component';
+import AppProps from './header';
 
 class AppComponent extends React.Component <AppProps, {}> {
   constructor(props: AppProps) {

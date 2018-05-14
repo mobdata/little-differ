@@ -7,7 +7,7 @@ var config = {
     filename: 'bundle.js'
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js']
+    extensions: ['.ts', '.tsx', '.js', '.css']
   },
   module: {
     rules: [
@@ -17,6 +17,10 @@ var config = {
         exclude: [
           path.resolve(__dirname, 'node_modules')
         ]
+      },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
       }
     ]
   },
