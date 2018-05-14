@@ -18,19 +18,19 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     };
   }
 
+  isPlainObject(object: Object) {
+    return object !== null && typeof object === 'object';
+  }
+
   traverseDoc(document: Object, callback: Function) {
     return Object.keys(document).map((key: string) => {
       const value = document[key];
-      if (value !== null && typeof value === 'object') {
+      if (this.isPlainObject(value)) {
         return this.traverseDoc(value, callback);
       } else {
         return callback(key, value);
       }
     })
-  }
-
-  isPlainObject(object: Object) {
-    return object !== null && typeof object === 'object';
   }
 
   findAllPaths(document: Object, path: string): Array<string> {
