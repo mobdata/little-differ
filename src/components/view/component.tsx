@@ -13,7 +13,6 @@ import constructList from './functions';
 class ViewComponent extends React.Component <ViewProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
-
     this.state = {
       flattenedAttributes: {},
     };
@@ -73,11 +72,15 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
       visibility: 'visible',
     };
 
-    console.log(this.state.flattenedAttributes);
+    const { flattenedAttributes } = this.state;
 
     return (
       <div style={containerStyles}>
-        Hello, world!
+        {
+          this.traverseDoc(flattenedAttributes, (key, value) => {
+            return <p key={key}>{key}: {value}</p>
+          })
+        }
       </div>
     )
   }
