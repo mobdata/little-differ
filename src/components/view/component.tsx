@@ -9,12 +9,12 @@ import * as React from 'react';
 import { ViewProps, ViewState } from './header';
 import constructList from './functions';
 
-
 class ViewComponent extends React.Component <ViewProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
     this.state = {
       flattenedAttributes: {},
+      flattenedDrawers: {},
     };
   }
 
@@ -41,9 +41,22 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
         } else {
           return [ ...acc, `${path}.${cur}` ];
         }
-      }, []
+      }, [] // <= initial value of the array (important)
     );
     return allPaths;
+  }
+
+  findAllDrawers(document: Object, path: string): Array<string> {
+    const allDrawers: Array<string> = Object.keys(document).reduce(
+      (acc: Array<string>, cur: string): Array<string> => {
+        if (this.isPlainObject(document[cur])) {
+          return [ ...acc, `${path}.${cur}`, ...this.findAllDrawers(document[cur], `${path}.${cur}`)];
+        } else {
+          return acc;
+        }
+      }, [] // <= initial value of the array (important)
+    );
+    return allDrawers;
   }
 
   componentDidMount() {
@@ -53,7 +66,12 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     allPaths.forEach((value: string): void => {
       flattenedAttributes[value] = null;
     })
-    this.setState({ flattenedAttributes });
+    const allDrawers = this.findAllDrawers(document, 'root');
+    let flattenedDrawers = {};
+    allDrawers.forEach((value: string): void => {
+      flattenedDrawers[value] = null;
+    })
+    this.setState({ flattenedAttributes, flattenedDrawers });
   }
 
   render() {
@@ -72,7 +90,9 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
       visibility: 'visible',
     };
 
-    const { flattenedAttributes } = this.state;
+    const { flattenedAttributes, flattenedDrawers } = this.state;
+    console.log(flattenedAttributes);
+    console.log(flattenedDrawers);
 
     return (
       <div style={containerStyles}>

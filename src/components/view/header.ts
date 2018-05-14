@@ -14,4 +14,5 @@ export interface ViewProps {
 
 export interface ViewState {
   flattenedAttributes: Object; // All key/values in props.documents w/o nesting
+  flattenedDrawers: Object; // All attributes which hold other attribtues
 }
