@@ -30,8 +30,8 @@ let documentB = {
 ReactDOM.render(
   <div>
     <AppComponent
-      documentA={documentA}
-      documentB={documentB}
+      docA={documentA}
+      docB={documentB}
     />
   </div>,
   document.getElementById('root')

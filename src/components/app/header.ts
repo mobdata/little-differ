@@ -6,8 +6,8 @@
 */
 
 interface AppProps {
-  documentA: object; // The first JSON document to be compared.
-  documentB: object; // The second JSON document to be compared.
+  docA: object; // The first JSON document to be compared.
+  docB: object; // The second JSON document to be compared.
 }
 
 export default AppProps;

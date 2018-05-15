@@ -17,7 +17,7 @@ class AppComponent extends React.Component <AppProps, {}> {
     return (
       <div>
         <JSONView
-          document={this.props.documentA}
+          doc={this.props.docA}
           height={400}
           width={400}
           backgroundColor='grey'

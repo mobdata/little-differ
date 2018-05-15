@@ -41,8 +41,8 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     );
   }
 
-  getValue(document: object, keys: Array<string>, i: number): object {
-    const value = document[keys[i]];
+  getValue(doc: object, keys: Array<string>, i: number): object {
+    const value = doc[keys[i]];
     if (this.isPlainObject(value)) {
       return this.getValue(value, keys, i+1);
     } else {
@@ -51,8 +51,8 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
   }
 
   componentDidMount() {
-    const { document } = this.props;
-    const paths = this.getPaths(document, 'root');
+    const { doc } = this.props;
+    const paths = this.getPaths(doc, 'root');
     const drawers = {};
     paths.filter(x => x.drawer).map(x => x.path).forEach((x) => {
       drawers[x] = false;
@@ -76,15 +76,17 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
       visibility: 'visible',
     };
 
-    const { document } = this.props;
+    const { doc } = this.props;
     const { paths, drawers } = this.state;
 
     return (
       <div style={containerStyles}>
         {
           paths.map((x) => {
+            const { path, drawer } =  x;
+            const keys = path.split('.');
             return <p key={x.path}>{
-              this.getValue(document, x.path.split('.'), 1)
+              this.getValue(doc, keys, 1)
             }</p>
           })
         }
