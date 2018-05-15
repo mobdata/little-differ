@@ -2,8 +2,15 @@
 * @name view/header.ts
 * @author Connor Bulakites
 * @description This file defines the type interfaces for the View component,
-* which can optionally accept arguments for both props and state.
+* which can optionally accept arguments for both props and state. There is also
+* the Path interface, which defines an object containing metadata regarding the
+* paths to unique values within a JSON document.
 */
+
+export interface Path {
+  path: string; // The path to a unique value within a JSON document
+  drawer: boolean; // Does this value link to an object containing more values?
+}
 
 export interface ViewProps {
   document: object; // The JSON document to be displayed as a list
@@ -13,7 +20,6 @@ export interface ViewProps {
 }
 
 export interface ViewState {
-  flattenedAttributes: object; // All key/values in props.documents w/o nesting
-  flattenedDrawers: object; // All attributes which hold other attribtues
-  flattenedLeaves: object; // All attribtues which don't hold other attribtues
+  paths: Array<Path>; // All of the paths to unique values within the document
+  drawers: object; // The status of whether drawers in the UI are open or not
 }

@@ -6,16 +6,15 @@
 */
 
 import * as React from 'react';
-import { ViewProps, ViewState } from './header';
+import { ViewProps, ViewState, Path } from './header';
 import constructList from './functions';
 
 class ViewComponent extends React.Component <ViewProps, ViewState> {
   constructor(props: ViewProps) {
     super(props);
     this.state = {
-      flattenedAttributes: {},
-      flattenedDrawers: {},
-      flattenedLeaves: {},
+      paths: [],
+      drawers: {},
     };
   }
 
@@ -23,36 +22,29 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     return object !== null && typeof object === 'object';
   }
 
-  findAllPaths(document: object, path: string): Array<string> {
-    const allPaths: Array<string> = Object.keys(document).reduce(
-      (acc: Array<string>, cur: string): Array<string> => {
-        if (this.isPlainObject(document[cur])) {
-          return [ ...acc, ...this.findAllPaths(document[cur], `${path}.${cur}`)];
+  getPaths(doc: object, path: string): Array<Path> {
+    return Object.keys(doc).reduce(
+      (acc: Array<Path>, cur: string): Array<Path> => {
+        if (this.isPlainObject(doc[cur])) {
+          return [
+            ...acc,
+            { path: `${path}.${cur}`, drawer: true },
+            ...this.getPaths(doc[cur], `${path}.${cur}`),
+          ];
         } else {
-          return [ ...acc, `${path}.${cur}` ];
+          return [
+            ...acc,
+            { path: `${path}.${cur}`, drawer: false },
+          ];
         }
-      }, [] // <= initial value of the array (important)
+      }, [] // <= initial value of the array
     );
-    return allPaths;
   }
 
-  findAllDrawers(document: object, path: string): Array<string> {
-    const allDrawers: Array<string> = Object.keys(document).reduce(
-      (acc: Array<string>, cur: string): Array<string> => {
-        if (this.isPlainObject(document[cur])) {
-          return [ ...acc, `${path}.${cur}`, ...this.findAllDrawers(document[cur], `${path}.${cur}`)];
-        } else {
-          return acc;
-        }
-      }, [] // <= initial value of the array (important)
-    );
-    return allDrawers;
-  }
-
-  getUltimateValue(document: object, keys: Array<string>, i: number): object {
+  getValue(document: object, keys: Array<string>, i: number): object {
     const value = document[keys[i]];
     if (this.isPlainObject(value)) {
-      return this.getUltimateValue(value, keys, i+1);
+      return this.getValue(value, keys, i+1);
     } else {
       return value;
     }
@@ -60,22 +52,12 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
 
   componentDidMount() {
     const { document } = this.props;
-    const allPaths = this.findAllPaths(document, 'root');
-    let flattenedAttributes = {};
-    allPaths.forEach((value: string): void => {
-      flattenedAttributes[value] = null;
-    })
-    const allDrawers = this.findAllDrawers(document, 'root');
-    let flattenedDrawers = {};
-    allDrawers.forEach((value: string): void => {
-      flattenedDrawers[value] = false;
-    })
-    const leafNodes = allPaths.filter(node => !flattenedDrawers[node]);
-    const flattenedLeaves = {};
-    leafNodes.forEach((value: string): void => {
-      flattenedLeaves[value] = null;
-    })
-    this.setState({ flattenedAttributes, flattenedDrawers, flattenedLeaves });
+    const paths = this.getPaths(document, 'root');
+    const drawers = {};
+    paths.filter(x => x.drawer).map(x => x.path).forEach((x) => {
+      drawers[x] = false;
+    });
+    this.setState({ paths, drawers });
   }
 
   render() {
@@ -95,24 +77,15 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     };
 
     const { document } = this.props;
-    const { flattenedAttributes, flattenedDrawers, flattenedLeaves } = this.state;
-
-    let test = {
-      'a': 1,
-      'b': {
-        'c': 2,
-        'd': {
-          'e': 3,
-        }
-      }
-    }
+    const { paths, drawers } = this.state;
 
     return (
       <div style={containerStyles}>
         {
-          Object.keys(flattenedAttributes).map((attribute) => {
-            const keys = attribute.split('.');
-            return <p key={attribute}>{this.getUltimateValue(document, keys, 1)}</p>
+          paths.map((x) => {
+            return <p key={x.path}>{
+              this.getValue(document, x.path.split('.'), 1)
+            }</p>
           })
         }
       </div>
