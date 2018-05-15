@@ -85,9 +85,8 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
           paths.map((x) => {
             const { path, drawer } =  x;
             const keys = path.split('.');
-            return <p key={x.path}>{
-              this.getValue(doc, keys, 1)
-            }</p>
+            const value = this.getValue(doc, keys, 1);
+            return <p key={path}>{value}</p>
           })
         }
       </div>
