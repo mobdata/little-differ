@@ -13,6 +13,7 @@ export interface ViewProps {
 }
 
 export interface ViewState {
-  flattenedAttributes: Object; // All key/values in props.documents w/o nesting
-  flattenedDrawers: Object; // All attributes which hold other attribtues
+  flattenedAttributes: object; // All key/values in props.documents w/o nesting
+  flattenedDrawers: object; // All attributes which hold other attribtues
+  flattenedLeaves: object; // All attribtues which don't hold other attribtues
 }

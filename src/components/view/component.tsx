@@ -15,25 +15,15 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     this.state = {
       flattenedAttributes: {},
       flattenedDrawers: {},
+      flattenedLeaves: {},
     };
   }
 
-  isPlainObject(object: Object) {
+  isPlainObject(object: object) {
     return object !== null && typeof object === 'object';
   }
 
-  traverseDoc(document: Object, callback: Function) {
-    return Object.keys(document).map((key: string) => {
-      const value = document[key];
-      if (this.isPlainObject(value)) {
-        return this.traverseDoc(value, callback);
-      } else {
-        return callback(key, value);
-      }
-    })
-  }
-
-  findAllPaths(document: Object, path: string): Array<string> {
+  findAllPaths(document: object, path: string): Array<string> {
     const allPaths: Array<string> = Object.keys(document).reduce(
       (acc: Array<string>, cur: string): Array<string> => {
         if (this.isPlainObject(document[cur])) {
@@ -46,7 +36,7 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     return allPaths;
   }
 
-  findAllDrawers(document: Object, path: string): Array<string> {
+  findAllDrawers(document: object, path: string): Array<string> {
     const allDrawers: Array<string> = Object.keys(document).reduce(
       (acc: Array<string>, cur: string): Array<string> => {
         if (this.isPlainObject(document[cur])) {
@@ -59,6 +49,14 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     return allDrawers;
   }
 
+  getUltimateValue(document: object, keys: Array<string>, i: number): object {
+    if (this.isPlainObject(document[keys[i]])) {
+      return this.getUltimateValue(document[keys[i+1]], keys, i+1);
+    } else {
+      return document[keys[i]];
+    }
+  }
+
   componentDidMount() {
     const { document } = this.props;
     const allPaths = this.findAllPaths(document, 'root');
@@ -69,9 +67,14 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     const allDrawers = this.findAllDrawers(document, 'root');
     let flattenedDrawers = {};
     allDrawers.forEach((value: string): void => {
-      flattenedDrawers[value] = null;
+      flattenedDrawers[value] = false;
     })
-    this.setState({ flattenedAttributes, flattenedDrawers });
+    const leafNodes = allPaths.filter(node => !flattenedDrawers[node]);
+    const flattenedLeaves = {};
+    leafNodes.forEach((value: string): void => {
+      flattenedLeaves[value] = null;
+    })
+    this.setState({ flattenedAttributes, flattenedDrawers, flattenedLeaves });
   }
 
   render() {
@@ -90,15 +93,14 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
       visibility: 'visible',
     };
 
-    const { flattenedAttributes, flattenedDrawers } = this.state;
-    console.log(flattenedAttributes);
-    console.log(flattenedDrawers);
+    const { document } = this.props;
+    const { flattenedAttributes, flattenedDrawers, flattenedLeaves } = this.state;
 
     return (
       <div style={containerStyles}>
         {
-          this.traverseDoc(flattenedAttributes, (key, value) => {
-            return <p key={key}>{key}: {value}</p>
+          Object.keys(flattenedAttributes).map((attribute) => {
+            return <p key={attribute}>{attribute.split('.')}</p>
           })
         }
       </div>
