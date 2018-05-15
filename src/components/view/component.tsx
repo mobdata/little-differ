@@ -50,10 +50,11 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
   }
 
   getUltimateValue(document: object, keys: Array<string>, i: number): object {
-    if (this.isPlainObject(document[keys[i]])) {
-      return this.getUltimateValue(document[keys[i+1]], keys, i+1);
+    const value = document[keys[i]];
+    if (this.isPlainObject(value)) {
+      return this.getUltimateValue(value, keys, i+1);
     } else {
-      return document[keys[i]];
+      return value;
     }
   }
 
@@ -96,11 +97,22 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     const { document } = this.props;
     const { flattenedAttributes, flattenedDrawers, flattenedLeaves } = this.state;
 
+    let test = {
+      'a': 1,
+      'b': {
+        'c': 2,
+        'd': {
+          'e': 3,
+        }
+      }
+    }
+
     return (
       <div style={containerStyles}>
         {
           Object.keys(flattenedAttributes).map((attribute) => {
-            return <p key={attribute}>{attribute.split('.')}</p>
+            const keys = attribute.split('.');
+            return <p key={attribute}>{this.getUltimateValue(document, keys, 1)}</p>
           })
         }
       </div>
