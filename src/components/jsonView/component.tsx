@@ -1,16 +1,16 @@
 /**
-* @name view/component.tsx
+* @name jsonView/component.tsx
 * @author Connor Bulakites
 * @description This file defines a component which renders a JSON documents
 * as an editable JSX list.
 */
 
 import * as React from 'react';
-import { ViewProps, ViewState, Path } from './header';
-import constructList from './functions';
+import { JsonViewProps, JsonViewState, Path } from './header';
+import Node from '../sharedComponents/node';
 
-class ViewComponent extends React.Component <ViewProps, ViewState> {
-  constructor(props: ViewProps) {
+class JsonViewComponent extends React.Component <JsonViewProps, JsonViewState> {
+  constructor(props: JsonViewProps) {
     super(props);
     this.state = {
       paths: [],
@@ -60,38 +60,60 @@ class ViewComponent extends React.Component <ViewProps, ViewState> {
     this.setState({ paths, drawers });
   }
 
+  renderSubJSON(doc: object, indent: number, path: string) {
+    return <div>{
+      Object.keys(doc).map((key) => {
+        const value = doc[key];
+        if (this.isPlainObject(value)) {
+          return (
+            <div key={ key + indent }>
+              <Node
+                path={`${path}.${key}`}
+                getPath={(path) => console.log({ path, drawer: 'true' })}
+              >
+                {key}: {'{'}{this.renderSubJSON(value, indent + 1, `${path}.${key}`)}{'},'}
+              </Node>
+            </div>
+          );
+        } else {
+          return (
+            <div key={key + indent}>
+              <Node
+                path={`${path}.${key}`}
+                getPath={(path) => console.log({ path, drawer: 'false' })}
+              >
+                {key}: {value},
+              </Node>
+            </div>
+          );
+        }
+      })
+    }</div>
+  }
+
+  renderMainJSON(doc: object) {
+    return <div style={{
+      fontFamily: 'courier',
+    }}>{'{'}
+      {this.renderSubJSON(doc, 1, 'root')}
+    {'}'}</div>
+  }
+
   render() {
     const containerStyles: React.CSSProperties = {
-      height: this.props.height,
-      width: this.props.width,
-      backgroundColor: this.props.backgroundColor,
       display: 'block',
     };
 
-    const hiddenList: React.CSSProperties = {
-      visibility: 'hidden',
-    };
-
-    const visibleList: React.CSSProperties = {
-      visibility: 'visible',
+    const listItemStyles: React.CSSProperties = {
+      border: 'solid',
+      borderWidth: 1,
     };
 
     const { doc } = this.props;
     const { paths, drawers } = this.state;
 
-    return (
-      <div style={containerStyles}>
-        {
-          paths.map((x) => {
-            const { path, drawer } =  x;
-            const keys = path.split('.');
-            const value = this.getValue(doc, keys, 1);
-            return <p key={path}>{value}</p>
-          })
-        }
-      </div>
-    )
+    return this.renderMainJSON(doc);
   }
 }
 
-export default ViewComponent;
+export default JsonViewComponent;

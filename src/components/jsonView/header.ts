@@ -1,7 +1,7 @@
 /**
-* @name view/header.ts
+* @name jsonView/header.ts
 * @author Connor Bulakites
-* @description This file defines the type interfaces for the View component,
+* @description This file defines the type interfaces for the JsonView component,
 * which can optionally accept arguments for both props and state. There is also
 * the Path interface, which defines an object containing metadata regarding the
 * paths to unique values within a JSON document.
@@ -12,14 +12,14 @@ export interface Path {
   drawer: boolean; // Does this value link to an object containing more values?
 }
 
-export interface ViewProps {
+export interface JsonViewProps {
   doc: object; // The JSON document to be displayed as a list
   height: number; // The height of the container div element
   width: number; // The width of the container div element
   backgroundColor: string; // The background color of the container div element
 }
 
-export interface ViewState {
+export interface JsonViewState {
   paths: Array<Path>; // All of the paths to unique values within the document
   drawers: object; // The status of whether drawers in the UI are open or not
 }

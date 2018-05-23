@@ -12,10 +12,8 @@
   "dependencies": {
     "@types/react": "^16.3.14",
     "@types/react-dom": "^16.0.5",
-    "bootstrap": "^4.1.1",
     "css-loader": "^0.28.11",
-    "jquery": "^3.3.1",
-    "popper.js": "^1.14.3",
+    "jsondiffpatch": "^0.3.10",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "style-loader": "^0.21.0",
