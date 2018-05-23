@@ -72,7 +72,7 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
               <div key={ key + indent + 0}>
                 <Node
                   path={`${path}.${key}`}
-                  getPath={(path) => console.log({ path, drawer: 'true' })}
+                  getPath={(path) => console.log({ path: `${path}.0`, drawer: 'true' })}
                 >
                   {key}: {'{'}{this.renderSubJSON(value[0], indent + 1, `${path}.${key}`)}{'},'}
                 </Node>
@@ -83,7 +83,7 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
               <div key={key + indent + 0}>
                 <Node
                   path={`${path}.${key}`}
-                  getPath={(path) => console.log({ path, drawer: 'false' })}
+                  getPath={(path) => console.log({ path: `${path}.0`, drawer: 'false' })}
                 >
                   {key}: {value[0]},
                 </Node>
@@ -95,7 +95,7 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
               <div key={ key + indent + 1}>
                 <Node
                   path={`${path}.${key}`}
-                  getPath={(path) => console.log({ path, drawer: 'true' })}
+                  getPath={(path) => console.log({ path: `${path}.1`, drawer: 'true' })}
                 >
                   {key}: {'{'}{this.renderSubJSON(value[1], indent + 1, `${path}.${key}`)}{'},'}
                 </Node>
@@ -106,7 +106,7 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
               <div key={key + indent + 1}>
                 <Node
                   path={`${path}.${key}`}
-                  getPath={(path) => console.log({ path, drawer: 'false' })}
+                  getPath={(path) => console.log({ path: `${path}.1`, drawer: 'false' })}
                 >
                   {key}: {value[1]},
                 </Node>
