@@ -9,13 +9,33 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import JsonView from '../jsonView/component';
 import DiffView from '../diffView/component';
-import AppProps from './header';
+import { AppProps, AppState } from './header';
+import { Pair } from '../sharedComponents/header';
 
 const jsondiffpatch = require('jsondiffpatch');
 
-class AppComponent extends React.Component <AppProps, {}> {
+class AppComponent extends React.Component <AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
+    this.state = {
+      newDoc: {},
+    };
+  }
+
+  addPair(pair: Pair) {
+    const { keys, value } = pair;
+    const currentDoc = this.state.newDoc;
+    let newDoc = this.addValue(keys.slice(1), value, currentDoc);
+    this.setState({ newDoc });
+  }
+
+  addValue(keys: Array<string>, value: object, doc: object) {
+    const currentKey = keys.shift();
+    if (keys.length < 1) {
+      return { ...doc, [currentKey]: value }
+    } else {
+      return { ...doc, currentKey: this.addValue(keys, value, doc[currentKey])}
+    }
   }
 
   render() {
@@ -50,10 +70,25 @@ class AppComponent extends React.Component <AppProps, {}> {
         <div
           style={{
             marginTop: 175,
+            float: 'left',
           }}
         >
           <DiffView
             doc={delta}
+            height={400}
+            width={400}
+            backgroundColor='grey'
+            addPair={(pair) => this.addPair(pair)}
+          />
+        </div>
+        <div
+          style={{
+            marginTop: 175,
+            marginLeft: 300,
+          }}
+        >
+          <JsonView
+            doc={this.state.newDoc}
             height={400}
             width={400}
             backgroundColor='grey'

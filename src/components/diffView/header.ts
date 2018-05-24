@@ -17,6 +17,7 @@ export interface DiffViewProps {
   height: number; // The height of the container div element
   width: number; // The width of the container div element
   backgroundColor: string; // The background color of the container div element
+  addPair: Function;
 }
 
 export interface DiffViewState {

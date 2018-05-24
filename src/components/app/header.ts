@@ -5,9 +5,11 @@
 * which can optionally accept arguments for both props and state.
 */
 
-interface AppProps {
+export interface AppProps {
   docA: object; // The first JSON document to be compared.
   docB: object; // The second JSON document to be compared.
 }
 
-export default AppProps;
+export interface AppState {
+  newDoc: object; // The new JSON document to be constructed.
+}
