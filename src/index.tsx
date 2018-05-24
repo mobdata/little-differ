@@ -37,3 +37,6 @@ ReactDOM.render(
   </div>,
   document.getElementById('root')
 );
+
+// When on NPM: point directly to the AppComponent:
+export default AppComponent;
