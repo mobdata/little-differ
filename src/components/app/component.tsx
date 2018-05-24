@@ -24,7 +24,7 @@ class AppComponent extends React.Component <AppProps, AppState> {
   }
 
   updateNewDoc(newDoc) {
-    console.log(newDoc);
+    this.props.getNewDoc(newDoc);
     this.setState({ newDoc });
   }
 

@@ -8,6 +8,7 @@
 export interface AppProps {
   docA: object; // The first JSON document to be compared.
   docB: object; // The second JSON document to be compared.
+  getNewDoc: Function;
 }
 
 export interface AppState {

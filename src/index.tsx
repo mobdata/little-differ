@@ -32,6 +32,7 @@ ReactDOM.render(
     <AppComponent
       docA={documentA}
       docB={documentB}
+      getNewDoc={(newDoc) => console.log(newDoc)}
     />
   </div>,
   document.getElementById('root')
