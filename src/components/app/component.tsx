@@ -23,11 +23,16 @@ class AppComponent extends React.Component <AppProps, AppState> {
     };
   }
 
+  updateNewDoc(newDoc) {
+    console.log(newDoc);
+    this.setState({ newDoc });
+  }
+
   addPair(pair: Pair) {
     const { keys, value } = pair;
     const currentDoc = this.state.newDoc;
     let newDoc = this.addValue(keys.slice(1), value, currentDoc);
-    this.setState({ newDoc });
+    this.updateNewDoc(newDoc);
   }
 
   addValue(keys: Array<string>, value: object, doc: object) {
@@ -89,9 +94,9 @@ class AppComponent extends React.Component <AppProps, AppState> {
           >
             <ReactJson
               src={this.state.newDoc}
-              onAdd={(add) => this.setState({ newDoc: add.updated_src })}
-              onEdit={(edit) => this.setState({ newDoc: edit.updated_src })}
-              onDelete={(del) => this.setState({ newDoc: del.updated_src })}
+              onAdd={({ updated_src }) => this.updateNewDoc(updated_src)}
+              onEdit={({ updated_src }) => this.updateNewDoc(updated_src)}
+              onDelete={({ updated_src }) => this.updateNewDoc(updated_src)}
             />
           </div>
         </div>
