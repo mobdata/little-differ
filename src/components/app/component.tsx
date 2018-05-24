@@ -7,6 +7,7 @@
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import ReactJson from 'react-json-view';
 import JsonView from '../jsonView/component';
 import DiffView from '../diffView/component';
 import { AppProps, AppState } from './header';
@@ -43,56 +44,56 @@ class AppComponent extends React.Component <AppProps, AppState> {
     const delta = jsondiffpatch.diff(docA, docB);
     return (
       <div>
-        <div
-          style={{
-            float: 'left',
-          }}
-        >
-          <JsonView
-            doc={docA}
-            height={400}
-            width={400}
-            backgroundColor='grey'
-          />
+        <div>
+          <div
+            style={{
+              float: 'left',
+            }}
+          >
+            <ReactJson
+              src={docA}
+            />
+          </div>
+          <div
+            style={{
+              marginLeft: 250,
+            }}
+          >
+            <ReactJson
+              src={docB}
+            />
+          </div>
         </div>
         <div
           style={{
-            marginLeft: 200,
+            marginTop: 150,
           }}
         >
-          <JsonView
-            doc={docB}
-            height={400}
-            width={400}
-            backgroundColor='grey'
-          />
-        </div>
-        <div
-          style={{
-            marginTop: 175,
-            float: 'left',
-          }}
-        >
-          <DiffView
-            doc={delta}
-            height={400}
-            width={400}
-            backgroundColor='grey'
-            addPair={(pair) => this.addPair(pair)}
-          />
-        </div>
-        <div
-          style={{
-            marginTop: 175,
-            marginLeft: 300,
-          }}
-        >
-          <JsonView
-            doc={this.state.newDoc}
-            height={400}
-            width={400}
-            backgroundColor='grey'
-          />
+          <div
+            style={{
+              float: 'left',
+            }}
+          >
+            <DiffView
+              doc={delta}
+              height={400}
+              width={400}
+              backgroundColor='grey'
+              addPair={(pair) => this.addPair(pair)}
+            />
+          </div>
+          <div
+            style={{
+              marginLeft: 250,
+            }}
+          >
+            <ReactJson
+              src={this.state.newDoc}
+              onAdd={(add) => this.setState({ newDoc: add.updated_src })}
+              onEdit={(edit) => this.setState({ newDoc: edit.updated_src })}
+              onDelete={(del) => this.setState({ newDoc: del.updated_src })}
+            />
+          </div>
         </div>
       </div>
     )
