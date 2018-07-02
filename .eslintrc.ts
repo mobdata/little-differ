@@ -17,7 +17,8 @@
     "import/extensions": [0, { "devDependencies": ["modules/*", "components/*"] }],
     "no-multi-spaces": [2, { "exceptions": { "VariableDeclarator": true }}],
     "no-prototype-builtins": [0],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"]}],
+    "no-undef": [0],
+    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"]}],
     "semi": [0]
   }
 }
