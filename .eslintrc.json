@@ -1,13 +1,5 @@
 {
-  "extends": "airbnb-base",
-  "plugins": [
-    "import"
-  ],
-  "globals": {
-    "document": true,
-    "window": true,
-    "fetch": true
-  },
+  "parser": "babel-eslint",
   "rules": {
     "import/no-extraneous-dependencies": [0, { "devDependencies": ["modules/*", "components/*"] }],
     "import/no-unresolved": [0, { "devDependencies": ["modules/*", "components/*"] }],

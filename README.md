@@ -54,13 +54,20 @@ These next two documents have a key named `b` instead of `a`. The output is very
 
 ![Docs have same key, different value](https://github.com/mobdata/little-differ/wiki/little-differ-examples-02.png)
 
-These documents have different keys, `a` and `b`. The output will show `null` for the document that's missing the key.
+These next documents have different keys, `a` and `b`. The output will show `null` for the document that's missing the key.
 
 ![Docs have different keys](https://github.com/mobdata/little-differ/wiki/little-differ-examples-03.png)
 
-It's a little more obvious once there are some common keys and unique keys. The output shows you how key `a` is in both documents and both documents have the same value, `1`. When you see `a: [{ a: 1 }, { a: 1} ]`, think of it as the document on the left and on the right. Then for key `b`, the output `b: [{ b: 2 }, null]` shows you the left document has value `2`, and the document on the right has no key `b` at all.
+The next output shows you how key `a` is in both documents and both documents have the same value, `1`. When you see `a: [{ a: 1 }, { a: 1} ]`, think of it as the document on the left and on the right. Then for key `b`, the output `b: [{ b: 2 }, null]` shows you the left document has value `2`, and the document on the right has no key `b` at all.
 
 ![Docs have some keys in common](https://github.com/mobdata/little-differ/wiki/little-differ-examples-04.png)
+
+## Using `null`
+
+We've made reckless use of `null` in the above examples.
+
+![null used to show a key is missing](https://github.com/mobdata/little-differ/wiki/little-differ-examples-06.png)
+
 
 ## Defining `undefined`
 
