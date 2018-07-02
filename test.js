@@ -5,7 +5,7 @@
 */
 
 import test from 'ava'
-import { compareJSON } from './lib/littleDiffer.js'
+import compareJSON from './lib/littleDiffer.js'
 
 test('Simple Test 1', (t) => {
   const testObj1 = { a: 1 }
@@ -162,26 +162,26 @@ test('Simple Test 18', (t) => {
     b: [{
       b: undefined,
     },
-      null],
+    null],
     c: [{
       c: undefined,
     },
-      null,
+    null,
     ],
     d: [{
       d: undefined,
     },
-      null,
+    null,
     ],
     e: [{
       e: undefined,
     },
-      null,
+    null,
     ],
     f: [{
       f: undefined,
     },
-      null,
+    null,
     ],
   }
   const result = compareJSON(testObj1, testObj2)
@@ -414,9 +414,19 @@ test('String Test 12', (t) => {
 })
 
 test('String Test 13', (t) => {
-  const testObj1 = { a: 'hello', b: 'goodbye', c: 'apple', d: 'pear' }
-  const testObj2 = { }
-  const testObj3 = { a: [{ a: 'hello' }, null], b: [{ b: 'goodbye' }, null], c: [{ c: 'apple' }, null], d: [{ d: 'pear' }, null] }
+  const testObj1 = {
+    a: 'hello',
+    b: 'goodbye',
+    c: 'apple',
+    d: 'pear',
+  }
+  const testObj2 = {}
+  const testObj3 = {
+    a: [{ a: 'hello' }, null],
+    b: [{ b: 'goodbye' }, null],
+    c: [{ c: 'apple' }, null],
+    d: [{ d: 'pear' }, null],
+  }
   const result = compareJSON(testObj1, testObj2)
   t.deepEqual(result, testObj3)
 })

@@ -16,7 +16,7 @@
  * docA = {a:3} docB = {b:3}           compareJSON output: {a: [{a:3},null], b: [null,{b:3}]}
  */
 
-export function compareJSON(obj1, obj2) {
+function compareJSON(obj1, obj2) {
   const ret = {}
   const arr1 = Object.keys(obj1)
   const arr2 = Object.keys(obj2)
@@ -46,8 +46,8 @@ export function compareJSON(obj1, obj2) {
         ret[key] = [{ [key]: obj1[key] }, null]
       }
     }
-  },
-  )
+  })
+
   // if there is a key in document2 that is not in document1 it will
   // be found here
   arr2.forEach((key) => {
@@ -60,7 +60,9 @@ export function compareJSON(obj1, obj2) {
         ret[key] = [null, { [key]: obj2[key] }]
       }
     }
-  },
-  )
+  })
+
   return ret
 }
+
+export default compareJSON
