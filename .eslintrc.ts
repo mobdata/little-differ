@@ -18,6 +18,7 @@
     "no-multi-spaces": [2, { "exceptions": { "VariableDeclarator": true }}],
     "no-prototype-builtins": [0],
     "no-undef": [0],
+    "no-unused-vars": [0],
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"]}],
     "semi": [0]
   }

@@ -77,15 +77,13 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
             bothNested = true;
           } else if (value[0] === null || value[1] === null) {
             nullValues = true;
-          } else if ((Object.values(value[0])[0] instanceof Array) ||
-                      (Object.values(value[1])[0] instanceof Array)) {
-            /*go here just to avoid defaulting to oneNested case */
-            isValueArray = false;
-          } else if (Object.values(value[0])[0] === Object.values(value[1])[0]) {
-            equalValues = true;
-          } else if (typeof Object.values(value[0])[0] === 'object' ||
-                     typeof Object.values(value[1])[0] === 'object') {
-            oneNested = true;
+          } else if (!((Object.values(value[0])[0] instanceof Array) ||
+              (Object.values(value[1])[0] instanceof Array))) {
+            if (Object.values(value[0])[0] === Object.values(value[1])[0]) {
+              equalValues = true;
+            } else if (typeof Object.values(value[0])[0] === 'object' || typeof Object.values(value[1])[0] === 'object') {
+              oneNested = true;
+            }
           }
           if (bothNested) {
             return (

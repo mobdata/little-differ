@@ -111,7 +111,7 @@ class AppComponent extends React.Component <AppProps, AppState> {
             }}
           >
             <DiffView
-              doc={delta}
+              diffData={delta}
               height={400}
               width={400}
               backgroundColor="grey"
