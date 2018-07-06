@@ -17,7 +17,7 @@ import { compareJSON } from '../../ld_diff';
 class AppComponent extends React.Component <AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
-    this.state = {
+    (this as any).state = {
       newDoc: {},
     };
   }
@@ -111,7 +111,7 @@ class AppComponent extends React.Component <AppProps, AppState> {
             }}
           >
             <DiffView
-              diffData={delta}
+              doc={delta}
               height={400}
               width={400}
               backgroundColor="grey"

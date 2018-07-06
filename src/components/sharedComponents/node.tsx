@@ -24,7 +24,7 @@ interface State {
 class Node extends React.Component <Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {
+    (this as any).state = {
       nodeStyles: {
         marginLeft: 15,
         cursor: 'pointer',
