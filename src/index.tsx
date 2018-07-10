@@ -44,16 +44,13 @@ const documentB = {
     },
   },
 };
-
-
 ReactDOM.render(
-  <div>
-    <AppComponent
-      docA={documentA}
-      docB={documentB}
-      getNewDoc={newDoc => newDoc}
-    />
-  </div>,
+  <AppComponent
+    docA={documentA}
+    docB={documentB}
+    getNewDoc={newDoc => newDoc}
+  />
+  ,
   document.getElementById('root'),
 );
 

@@ -1,16 +1,16 @@
 /**
 * @name diffView/component.tsx
-* @author Sara Kim and Juliet Adams feat. Connor Bulakites
+* @author Juliet Adams, Sara Kim and Connor Bulakites
 * @description This file defines a component which renders a color-coded diff
 * view between two JSON documents.
 */
 
 import * as React from 'react';
-import { DiffViewProps, DiffViewState, Path } from './header';
+import { DiffViewProps } from './header';
 import Node from '../sharedComponents/node';
 
 
-class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
+class DiffViewComponent extends React.Component <DiffViewProps> {
 
 
     /*
@@ -61,7 +61,7 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
   renderDiffView(doc: object, indent: number, path: string) {
     return (
       <div>{
-        Object.keys(doc).map((key) => {
+        Object.keys(doc).map((key) => <div key={key}> { (() => {
           const value = doc[key];
           const objColor = ['blue', 'red'];
           let valueA = <div />;
@@ -87,10 +87,8 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
           }
           if (bothNested) {
             return (
-              <div>
-                <div style={{ marginLeft: 15 }}>
-                  {key} : {'{'}{this.renderDiffView(value, indent + 1, `${path}.${key}`)}{'}'}
-                </div>
+              <div style={{ marginLeft: 15 }}>
+                {key} : {'{'}{this.renderDiffView(value, indent + 1, `${path}.${key}`)}{'}'}
               </div>
             );
           } else if (oneNested) {
@@ -105,17 +103,15 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
                   <div style={{ color: 'blue', marginLeft: 15 }}>
                     {key} : {'{'}{this.renderDiffView(Object.values(value[0])[0], indent + 1, `${path}.${key}`)}{'}'}
                   </div>
-                  <div key={key + indent}>
-                    <Node
-                      path={`${path}.${key}`}
-                      getPath={nodePath => this.assignPair(`1.${path}.${key}`, doc)}
-                      renderColor={'red'}
-                      isArray={isValueArray}
-                      isUndefined={valueIsUndefined}
-                    >
-                      {key} : {Object.values(value[1])[0].toString()}
-                    </Node>
-                  </div>
+                  <Node
+                    path={`${path}.${key}`}
+                    getPath={nodePath => this.assignPair(`1.${path}.${key}`, doc)}
+                    renderColor={'red'}
+                    isArray={isValueArray}
+                    isUndefined={valueIsUndefined}
+                  >
+                    {key} : {Object.values(value[1])[0].toString()}
+                  </Node>
                 </div>
               );
             }
@@ -124,17 +120,15 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
             }
             return (
               <div>
-                <div key={key + indent}>
-                  <Node
-                    path={`${path}.${key}`}
-                    getPath={nodePath => this.assignPair(`0.${path}.${key}`, doc)}
-                    renderColor={'blue'}
-                    isArray={isValueArray}
-                    isUndefined={valueIsUndefined}
-                  >
-                    {key} : {Object.values(value[0])[0].toString()}
-                  </Node>
-                </div>
+                <Node
+                  path={`${path}.${key}`}
+                  getPath={nodePath => this.assignPair(`0.${path}.${key}`, doc)}
+                  renderColor={'blue'}
+                  isArray={isValueArray}
+                  isUndefined={valueIsUndefined}
+                >
+                  {key} : {Object.values(value[0])[0].toString()}
+                </Node>
                 <div style={{ color: 'red', marginLeft: 15 }}>
                   {key} : {'{'}{this.renderDiffView(Object.values(value[1])[0], indent + 1, `${path}.${key}`)}{'}'}
                 </div>
@@ -149,32 +143,11 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
             if (Object.values(value[whichDoc])[0] instanceof Array) {
               isValueArray = true;
             } else if (typeof Object.values(value[whichDoc])[0] === 'object') {
-              return (
-                <div>
-                  <div>
-                    {this.renderDiffView(value[whichDoc], indent + 1, `${path}`)}
-                  </div>
-                </div>
-              );
+              return this.renderDiffView(value[whichDoc], indent + 1, `${path}`);
             }
             if (Object.values(value[whichDoc])[0] === undefined) {
               valueIsUndefined = true;
               return (
-                <div>
-                  <Node
-                    path={`${path}.${key}`}
-                    getPath={nodePath => this.assignPair(`${whichDoc}.${path}.${key}`, doc)}
-                    renderColor={objColor[whichDoc]}
-                    isArray={isValueArray}
-                    isUndefined={valueIsUndefined}
-                  >
-                    {key} : {Object.values(value[whichDoc])[0]}
-                  </Node>
-                </div>
-              );
-            }
-            return (
-              <div>
                 <Node
                   path={`${path}.${key}`}
                   getPath={nodePath => this.assignPair(`${whichDoc}.${path}.${key}`, doc)}
@@ -182,9 +155,20 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
                   isArray={isValueArray}
                   isUndefined={valueIsUndefined}
                 >
-                  {key} : {Object.values(value[whichDoc])[0].toString()}
+                  {key} : {Object.values(value[whichDoc])[0]}
                 </Node>
-              </div>
+              );
+            }
+            return (
+              <Node
+                path={`${path}.${key}`}
+                getPath={nodePath => this.assignPair(`${whichDoc}.${path}.${key}`, doc)}
+                renderColor={objColor[whichDoc]}
+                isArray={isValueArray}
+                isUndefined={valueIsUndefined}
+              >
+                {key} : {Object.values(value[whichDoc])[0].toString()}
+              </Node>
             );
           } else if (equalValues) {
             if ((Object.values(value[0])[0] instanceof Array) &&
@@ -196,17 +180,15 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
               valueIsUndefined = true;
             }
             return (
-              <div style={{ color: 'black' }}>
-                <Node
-                  path={`${path}.${key}`}
-                  getPath={nodePath => this.assignPair(`0.${path}.${key}`, doc)}
-                  renderColor={'black'}
-                  isArray={isValueArray}
-                  isUndefined={valueIsUndefined}
-                >
-                  {key} : {Object.values(value[0]).toString()}
-                </Node>
-              </div>
+              <Node
+                path={`${path}.${key}`}
+                getPath={nodePath => this.assignPair(`0.${path}.${key}`, doc)}
+                renderColor={'black'}
+                isArray={isValueArray}
+                isUndefined={valueIsUndefined}
+              >
+                {key} : {Object.values(value[0]).toString()}
+              </Node>
             );
           }
           if (Object.values(value[0])[0] instanceof Array) {
@@ -215,17 +197,15 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
             valueIsUndefined = true;
           }
           valueA = (
-            <div key={key + indent}>
-              <Node
-                path={`${path}.${key}`}
-                getPath={nodePath => this.assignPair(`0.${path}.${key}`, doc)}
-                renderColor={'blue'}
-                isArray={isValueArray}
-                isUndefined={valueIsUndefined}
-              >
-                {key} : {Object.values(value[0]).toString()}
-              </Node>
-            </div>
+            <Node
+              path={`${path}.${key}`}
+              getPath={nodePath => this.assignPair(`0.${path}.${key}`, doc)}
+              renderColor={'blue'}
+              isArray={isValueArray}
+              isUndefined={valueIsUndefined}
+            >
+              {key} : {Object.values(value[0]).toString()}
+            </Node>
           );
           if (Object.values(value[1])[0] instanceof Array) {
             isValueArray = true;
@@ -238,31 +218,24 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
             valueIsUndefined = false;
           }
           valueB = (
-            <div key={key + indent}>
-              <Node
-                path={`${path}.${key}`}
-                getPath={nodePath => this.assignPair(`1.${path}.${key}`, doc)}
-                renderColor={'red'}
-                isArray={false}
-                isUndefined={valueIsUndefined}
-              >
-                {key} : {Object.values(value[1]).toString()}
-              </Node>
-            </div>
+            <Node
+              path={`${path}.${key}`}
+              getPath={nodePath => this.assignPair(`1.${path}.${key}`, doc)}
+              renderColor={'red'}
+              isArray={isValueArray}
+              isUndefined={valueIsUndefined}
+            >
+              {key} : {Object.values(value[1]).toString()}
+            </Node>
           );
           return (
             <div>
-              <div>
-                {valueA}
-              </div>
-              <div>
-                {valueB}
-              </div>
+              {valueA}
+              {valueB}
             </div>
           );
-        },
-      )
-    } </div>
+        })()} </div>)
+      } </div>
     );
   }
     /*
@@ -270,11 +243,7 @@ class DiffViewComponent extends React.Component <DiffViewProps, DiffViewState> {
      */
   render() {
     const { doc } = this.props;
-    return (
-      <div style={{ fontFamily: 'courier' }}>
-        {'{'}{this.renderDiffView(doc, 1, 'root')}{'}'}
-      </div>
-    );
+    return this.renderDiffView(doc, 1, 'root');
   }
 }
 export default DiffViewComponent;

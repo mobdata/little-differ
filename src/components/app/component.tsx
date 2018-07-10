@@ -1,6 +1,6 @@
 /**
 * @name app/component.tsx
-* @author Connor Bulakites
+* @author Sara Kim, Juliet Adams and Connor Bulakites
 * @description This file defines the main React component which calls all other
 * React components. This will be the public interface of the finished component.
 */

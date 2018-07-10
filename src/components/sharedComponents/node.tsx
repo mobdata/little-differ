@@ -1,12 +1,11 @@
 /**
 * @name view/node.tsx
-* @author Connor Bulakites
+* @author Sara Kim, Juliet Adams and Connor Bulakites
 * @description This file defines a component which encapsulates a single
 * key/value pair in a JSON document.
 */
 
 import * as React from 'react';
-//import { Path } from './header';
 
 interface Props {
   path: string;
@@ -47,11 +46,12 @@ class Node extends React.Component <Props, State> {
             marginLeft: 15,
             cursor: 'pointer',
             color: renderColor,
+            fontFamily: 'courier',
           }}
           onClick={() => getPath(path)}
           role="presentation"
         >
-          {tmpChildren[0]} {tmpChildren[1]} {'['}{ tmpChildren[2] }{']'}
+          { tmpChildren[0] } { tmpChildren[1] } { tmpChildren[2] }
         </div>
       );
     } else if (isUndefined) {
@@ -61,6 +61,7 @@ class Node extends React.Component <Props, State> {
             marginLeft: 15,
             cursor: 'pointer',
             color: renderColor,
+            fontFamily: 'courier',
           }}
           onClick={() => getPath(path)}
           role="presentation"
@@ -75,6 +76,7 @@ class Node extends React.Component <Props, State> {
           marginLeft: 15,
           cursor: 'pointer',
           color: renderColor,
+          fontFamily: 'courier',
         }}
         onClick={() => getPath(path)}
         role="presentation"
