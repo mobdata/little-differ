@@ -5,9 +5,9 @@
 * the main App component. It is referenced in the public index.html file.
 */
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import AppComponent from './components/app/component';
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import AppComponent from './components/app/component'
 
 const documentA = {
   a: {
@@ -25,7 +25,7 @@ const documentA = {
   h: {
     i: false,
   },
-};
+}
 
 const documentB = {
   a: {
@@ -43,7 +43,15 @@ const documentB = {
       },
     },
   },
-};
+}
+
+// const documentA = {
+//   a: 1
+// }
+// const documentB = {
+//   b: [4,5,6]
+// }
+
 ReactDOM.render(
   <AppComponent
     docA={documentA}
@@ -52,7 +60,7 @@ ReactDOM.render(
   />
   ,
   document.getElementById('root'),
-);
+)
 
 // When on NPM: point directly to the AppComponent:
-export default AppComponent;
+export default AppComponent

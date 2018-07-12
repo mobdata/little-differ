@@ -5,11 +5,11 @@
 * React components. This will be the public interface of the finished component.
 */
 
-import * as React from 'react';
-import ReactJson from 'react-json-view';
-import DiffView from '../diffView/component';
-import { AppProps, AppState } from './header';
-import { compareJSON } from '../../ld_diff';
+import * as React from 'react'
+import ReactJson from 'react-json-view'
+import DiffView from '../diffView/component'
+import { AppProps, AppState } from './header'
+import { compareJSON } from '../../ld_diff'
 
 /*AppComponent sets the state of the newDoc. newDoc is an object that is used to
  *store the elements that are added by the user
@@ -19,23 +19,23 @@ class AppComponent extends React.Component <AppProps, AppState> {
     super(props);
     (this as any).state = {
       newDoc: {},
-    };
+    }
   }
 
 /*updateNewDoc, as the function name states, updates newDoc by resetting the
  *state
  */
   updateNewDoc(newDoc) {
-    this.props.getNewDoc(newDoc);
-    this.setState({ newDoc });
+    this.props.getNewDoc(newDoc)
+    this.setState({ newDoc })
   }
 
 /*addPair creates newDoc and updates it. newDoc is created by calling addToDoc.
 */
   addPair(keys: Array<string>, value: object) {
-    const currentDoc = this.state.newDoc;
-    const newDoc = this.addToDoc(keys.slice(1), value, currentDoc);
-    this.updateNewDoc(newDoc);
+    const currentDoc = this.state.newDoc
+    const newDoc = this.addToDoc(keys.slice(1), value, currentDoc)
+    this.updateNewDoc(newDoc)
   }
 
 /*addToDoc adds the key and value pair to the doc. This doc is returned as
@@ -47,25 +47,18 @@ class AppComponent extends React.Component <AppProps, AppState> {
      *keys is constantly being sliced as it goes down a path, so the current key
      *is always the first element
      */
-    const currentKey = keys.shift();
     /*This first if statement checks where one is when they have clicked on
      *an element in the module. Specifically, this check is when one chooses an
      *element that is at the end of a nest.
      */
+
+    const currentKey = keys.shift()
     if (keys.length < 1) {
       return { ...doc, [currentKey]: Object.values(value)[0] }
     }
-
-    /*If the element is in another form, it enters this else statement*/
-
-      /*If there have already been elements added, it enters this first if stat-
-       *ment.Recursively calls addToDoc
-       */
     if (doc[currentKey]) {
       return { ...doc, [currentKey]: this.addToDoc(keys, value, doc[currentKey]) }
     }
-      /*Else, nothing has been added yet, go here and recursively call adddValue
-      */
     return { ...doc, [currentKey]: this.addToDoc(keys, value, {}) }
   }
 
@@ -75,41 +68,25 @@ class AppComponent extends React.Component <AppProps, AppState> {
    *the browser
    */
   render() {
-    const { docA, docB } = this.props;
-    const delta = compareJSON(docA, docB);
+    const { docA, docB } = this.props
+    const delta = compareJSON(docA, docB)
 
     return (
       <div>
         <div>
-          <div
-            style={{
-              float: 'left',
-            }}
-          >
+          <div style={{ float: 'left' }}>
             <ReactJson
               src={docA}
             />
           </div>
-          <div
-            style={{
-              marginLeft: 250,
-            }}
-          >
+          <div style={{ marginLeft: 250 }}>
             <ReactJson
               src={docB}
             />
           </div>
         </div>
-        <div
-          style={{
-            marginTop: 150,
-          }}
-        >
-          <div
-            style={{
-              float: 'left',
-            }}
-          >
+        <div style={{ marginTop: 150 }}>
+          <div style={{ float: 'left' }}>
             <DiffView
               doc={delta}
               height={400}
@@ -118,11 +95,7 @@ class AppComponent extends React.Component <AppProps, AppState> {
               addPair={(key, value) => this.addPair(key, value)}
             />
           </div>
-          <div
-            style={{
-              marginLeft: 250,
-            }}
-          >
+          <div style={{ marginLeft: 250 }} >
             <ReactJson
               src={this.state.newDoc}
               onAdd={({ updated_src }) => this.updateNewDoc(updated_src)}
@@ -136,4 +109,4 @@ class AppComponent extends React.Component <AppProps, AppState> {
   }
 }
 
-export default AppComponent;
+export default AppComponent
