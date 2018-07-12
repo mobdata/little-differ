@@ -5,18 +5,6 @@
 * diffed document after
 */
 
-
-/*
- * getKey was created to ensure that when the value from one of the docs is placed
- * into the array, that it is in the format of an object
- */
-
-function getKey(obj, key) {
-  const objtmp = {};
-  objtmp[key] = obj[key];
-  return objtmp;
-}
-
 /*
  * compareJSON is a diffing function that was written by the developers that
  * had a consistent, specific output. The outputs will be a document that contains
@@ -26,34 +14,33 @@ function getKey(obj, key) {
  */
 
 function compareJSON(obj1, obj2) {
-  const ret = {};
-  const arr1 = Object.keys(obj1);
-  const arr2 = Object.keys(obj2);
-
+  const ret = {}
+  const arr1 = Object.keys(obj1)
+  const arr2 = Object.keys(obj2)
 
   arr1.forEach((key) => {
     //if this key is found in both documents
     if (obj1.hasOwnProperty(key) && obj2.hasOwnProperty(key)) {
       if ((obj1[key] instanceof Array) || (obj2[key] instanceof Array)) {
-        ret[key] = [getKey(obj1, key), getKey(obj2, key)];
+        ret[key] = [{ [key]: obj1[key] }, { [key]: obj2[key] }]
       } else if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
-        ret[key] = compareJSON(obj1[key], obj2[key]);
+        ret[key] = compareJSON(obj1[key], obj2[key])
       } else if (typeof obj1[key] === 'object' && !(typeof obj2[key] === 'object')) {
-        ret[key] = [{ [key]: compareJSON(obj1[key], {}) }, getKey(obj2, key)];
+        ret[key] = [{ [key]: compareJSON(obj1[key], {}) }, { [key]: obj2[key] }]
       } else if (typeof obj2[key] === 'object' && !(typeof obj1[key] === 'object')) {
-        ret[key] = [getKey(obj1, key), { [key]: compareJSON({}, obj2[key]) }];
+        ret[key] = [{ [key]: obj1[key] }, { [key]: compareJSON({}, obj2[key]) }]
       } else {
-        ret[key] = [getKey(obj1, key), getKey(obj2, key)];
+        ret[key] = [{ [key]: obj1[key] }, { [key]: obj2[key] }]
       }
     }
     //if this key is only found in document1
     if (obj1.hasOwnProperty(key) && !obj2.hasOwnProperty(key)) {
       if (obj1[key] instanceof Array) {
-        ret[key] = [getKey(obj1, key), null];
+        ret[key] = [{ [key]: obj1[key] }, null]
       } else if (typeof obj1[key] === 'object') {
-        ret[key] = [{ [key]: compareJSON(obj1[key], {}) }, null];
+        ret[key] = [{ [key]: compareJSON(obj1[key], {}) }, null]
       } else {
-        ret[key] = [getKey(obj1, key), null];
+        ret[key] = [{ [key]: obj1[key] }, null]
       }
     }
   },
@@ -63,16 +50,16 @@ function compareJSON(obj1, obj2) {
   arr2.forEach((key) => {
     if (obj2.hasOwnProperty(key) && !ret.hasOwnProperty(key)) {
       if (obj2[key] instanceof Array) {
-        ret[key] = [null, getKey(obj2, key)];
+        ret[key] = [null, { [key]: obj2[key] }]
       } else if (typeof obj2[key] === 'object') {
-        ret[key] = [null, { [key]: compareJSON({}, obj2[key]) }];
+        ret[key] = [null, { [key]: compareJSON({}, obj2[key]) }]
       } else {
-        ret[key] = [null, getKey(obj2, key)];
+        ret[key] = [null, { [key]: obj2[key] }]
       }
     }
   },
   )
-  return ret;
+  return ret
 }
 
-module.exports.compareJSON = compareJSON;
+module.exports.compareJSON = compareJSON
