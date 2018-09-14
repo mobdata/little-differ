@@ -12,9 +12,9 @@ Add to your `package.json` dependencies:
 ````json
 ...
   "dependencies": {
-    "...",
+    "key": "value",
     "@keywcorp.com/little-differ": "^1.0.0",
-    "..."
+    "key": "value"
   },
 ...
 ````
@@ -62,3 +62,10 @@ It's a little more obvious once there are some common keys and unique keys. The 
 
 ![Docs have some keys in common](https://github.com/mobdata/little-differ/wiki/little-differ-examples-04.png)
 
+## Defining `undefined`
+
+`little-differ` can distinguish between a missing key and a key's value set to `undefined`.
+
+But wait, `undefined` isn't valid JSON...this is true, but it's very easy to programmatically assigned `undefined` to a value when creating JSON. Here's how the output differs with a missing key versus an `undefined` value.
+
+![Missing versus undefined](https://github.com/mobdata/little-differ/wiki/little-differ-examples-05.png)
