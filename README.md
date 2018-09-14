@@ -34,7 +34,7 @@ console.log(diffDoc)
 
 The output will be:
 
-````json
+````javascript
 {
     a: [{a: 1}, {a: 2}]
 }
