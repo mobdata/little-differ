@@ -69,3 +69,7 @@ It's a little more obvious once there are some common keys and unique keys. The 
 But wait, `undefined` isn't valid JSON...this is true, but it's very easy to programmatically assigned `undefined` to a value when creating JSON. Here's how the output differs with a missing key versus an `undefined` value.
 
 ![Missing versus undefined](https://github.com/mobdata/little-differ/wiki/little-differ-examples-05.png)
+
+## Using `null`
+
+In JSON `null` is not allowed as a key's value. `a: null` is right out, and throws an error in your code if you try to assign it so. But JSON arrays may have nulls, so `{ a: [{ a: 1 }, null] }` is legal. In this case it's telling us the right-hand document doesn't have a key named `a`.
