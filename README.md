@@ -12,9 +12,9 @@ Add to your `package.json` dependencies:
 ````json
 ...
   "dependencies": {
-    ...
+    "...",
     "@keywcorp.com/little-differ": "^1.0.0",
-    ...
+    "..."
   },
 ...
 ````
@@ -46,13 +46,13 @@ The output will be:
 
 | differ 'a' | docA | docB |
 |------------|------|------|
-|       |  `{ a:1 }` | `{ a:2}` |
+|       |  `{ a:1 }` | `{ a:2 }` |
 | `{a:` |  `[{ a:1 },` | `{ a:2}]}` |
 
 ### Docs don't share a common key
 
 | differ 'a' | docA | docB |
 |------------|------|------|
-|       |  `{ a:1 }`   | `{ b:2}` |
+|       |  `{ a:1 }`   | `{ b:2 }` |
 | `{a:` |  `[{ a:1 },` | `null],` |
 | `b:`  |  `[null,`    | `{ b:2 }]}` |
