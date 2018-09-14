@@ -16,7 +16,7 @@
  * docA = {a:3} docB = {b:3}           compareJSON output: {a: [{a:3},null], b: [null,{b:3}]}
  */
 
-function compareJSON(obj1, obj2) {
+export function compareJSON(obj1, obj2) {
   const ret = {}
   const arr1 = Object.keys(obj1)
   const arr2 = Object.keys(obj2)
@@ -64,5 +64,3 @@ function compareJSON(obj1, obj2) {
   )
   return ret
 }
-
-module.exports.compareJSON = compareJSON
