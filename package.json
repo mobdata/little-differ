@@ -1,8 +1,8 @@
 {
   "name": "@keywcorp.com/little-differ",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A library that diffs two JSON documents and output one JSON document describing both documents and their diffs",
-  "main" : "lib/littleDiffer.js",
+  "main": "lib/littleDiffer.js",
   "scripts": {
     "babel": "babel littleDiffer.js --out-dir lib",
     "build": "node littleDiffer",
@@ -18,11 +18,11 @@
   "devDependencies": {
     "ava": "1.0.0-beta.5.1",
     "babel-cli": "^6.26.0",
+    "babel-eslint": "^9.0.0",
     "babel-preset-env": "^1.7.0",
-    "babel-eslint": "^7.2.3",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb": "^15.0.1",
-    "eslint-plugin-import": "^2.12.0",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "pre-commit": "^1.2.2"
   }
 }
