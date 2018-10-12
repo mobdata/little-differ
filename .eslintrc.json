@@ -1,17 +1,5 @@
 {
-<<<<<<< HEAD
-  "extends": "airbnb-base",
-  "plugins": [
-    "import"
-  ],
-  "globals": {
-    "document": true,
-    "window": true,
-    "fetch": true
-  },
-=======
   "parser": "babel-eslint",
->>>>>>> 6884d40... WORKING VERSION -- no ava/babel bug in this commit
   "rules": {
     "import/no-extraneous-dependencies": [0, { "devDependencies": ["modules/*", "components/*"] }],
     "import/no-unresolved": [0, { "devDependencies": ["modules/*", "components/*"] }],
