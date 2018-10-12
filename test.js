@@ -5,7 +5,7 @@
 */
 
 import test from 'ava'
-import compareJSON from './lib/littleDiffer.js'
+import { compareJSON } from './lib/littleDiffer.js'
 
 test('Simple Test 1', (t) => {
   const testObj1 = { a: 1 }
