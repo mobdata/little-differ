@@ -1,6 +1,6 @@
 {
   "name": "@keywcorp.com/little-differ",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A library that diffs two JSON documents and output one JSON document describing both documents and their diffs",
   "main": "lib/littleDiffer.js",
   "scripts": {
