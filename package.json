@@ -1,0 +1,44 @@
+{
+  "name": "@mobdata/little-differ",
+  "version": "0.0.0",
+  "repository": "https://github.com/mobdata/little-differ/",
+  "description": "A library that diffs two JSON documents and output one JSON document describing both documents and their diffs",
+  "main": "lib/littleDiffer.js",
+  "scripts": {
+    "babel": "babel constants.js littleDiffer.js tripleDiffer.js --out-dir lib",
+    "build": "npm run babel; node constants; node littleDiffer; node tripleDiffer",
+    "test": "npm run babel ;ava ",
+    "test-verbose": "npm run babel ;ava -- verbose",
+    "lint": "eslint --config .eslintrc.json 'test.js' 'tripleDiffer.test.js' 'littleDiffer.js' 'tripleDiffer.js'"
+  },
+  "contributors": [
+    {
+      "name": "Juliet Adams"
+    },
+    {
+      "name": "Marita Carballo",
+      "email": "MaritaRCarballo@gmail.com"
+    },
+    {
+      "name": "Timothy McKernan",
+      "email": "timbitsandbytes@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-react": "^7.12.1",
+    "ava": "3.13.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "pre-commit": "^1.2.2"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "import/no-extraneous-dependencies": [0, { "devDependencies": ["modules/*", "components/*"] }],
+    "import/no-unresolved": [0, { "devDependencies": ["modules/*", "components/*"] }],
+    "import/extensions": [0, { "devDependencies": ["modules/*", "components/*"] }],
+    "no-multi-spaces": [2, { "exceptions": { "VariableDeclarator": true }}],
+    "no-prototype-builtins": [0],
+    "semi": [0]
+  }
+}
